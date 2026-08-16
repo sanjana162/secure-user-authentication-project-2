@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A simple client-side authentication." />
+    <title>SafePass — Simple authentication</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="intro-panel" aria-label="Welcome">
+        <a class="brand" href="#" aria-label="SafePass home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 20 6v5.7c0 4.8-3.2 8.4-8 9.6-4.8-1.2-8-4.8-8-9.6V6l8-3.2Z" stroke="currentColor" stroke-width="1.8"/><path d="m8.6 11.8 2.2 2.2 4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          SafePass
+        </a>
+
+        <div class="intro-copy">
+          <p class="eyebrow">PRIVATE BY DESIGN</p>
+          <h1>A calmer way to sign in.</h1>
+          <p class="intro-text">Create an account, keep your space protected, and get back to what matters.</p>
+        </div>
+
+        <div class="security-note">
+          <span class="note-icon" aria-hidden="true">✓</span>
+          <span>Passwords are never shown or stored in plain text.</span>
+        </div>
+      </section>
+
+      <section class="auth-panel" aria-live="polite">
+        <div class="auth-card" id="authView">
+          <div class="auth-heading">
+            <p class="eyebrow">WELCOME</p>
+            <h2 id="formTitle">Welcome back</h2>
+            <p id="formSubtitle">Sign in to continue to your account.</p>
+          </div>
+
+          <div class="mode-switch" role="tablist" aria-label="Authentication mode">
+            <button class="mode-button active" type="button" role="tab" aria-selected="true" data-mode="login">Sign in</button>
+            <button class="mode-button" type="button" role="tab" aria-selected="false" data-mode="register">Create account</button>
+          </div>
+
+          <form id="authForm" novalidate>
+            <div class="field name-field hidden">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="e.g. Priya Sharma" maxlength="50" />
+            </div>
+
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+            </div>
+
+            <div class="field">
+              <div class="label-row">
+                <label for="password">Password</label>
+                <button class="text-button hidden" id="forgotButton" type="button">Forgot password?</button>
+              </div>
+              <div class="password-wrap">
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required minlength="8" />
+                <button class="password-toggle" type="button" aria-label="Show password" title="Show password">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.7" stroke="currentColor" stroke-width="1.8"/></svg>
+                </button>
+              </div>
+              <p class="field-help register-help hidden">Use 8+ characters with a number and a symbol.</p>
+            </div>
+
+            <div class="field confirm-field hidden">
+              <label for="confirmPassword">Confirm password</label>
+              <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Repeat your password" />
+            </div>
+
+            <p class="form-message" id="formMessage" role="alert"></p>
+            <button class="primary-button" id="submitButton" type="submit">Sign in <span aria-hidden="true">→</span></button>
+          </form>
+
+          <p class="terms-text" id="termsText">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+        </div>
+
+        <section class="dashboard hidden" id="dashboardView" aria-labelledby="dashboardTitle">
+          <div class="dashboard-top">
+            <a class="brand compact" href="#"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 20 6v5.7c0 4.8-3.2 8.4-8 9.6-4.8-1.2-8-4.8-8-9.6V6l8-3.2Z" stroke="currentColor" stroke-width="1.8"/><path d="m8.6 11.8 2.2 2.2 4.7-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>SafePass</a>
+            <button class="logout-button" id="logoutButton" type="button">Sign out</button>
+          </div>
+          <div class="welcome-card">
+            <span class="welcome-icon" aria-hidden="true">✓</span>
+            <p class="eyebrow">PROTECTED AREA</p>
+            <h2 id="dashboardTitle">You’re securely signed in.</h2>
+            <p>Welcome, <strong id="userName">there</strong>. This page is available only after a successful login.</p>
+            <div class="user-chip"><span class="avatar" id="avatar">U</span><span><b id="userEmail">user@email.com</b><small id="userRole">Member account</small></span></div>
+          </div>
+          <div class="dashboard-grid">
+            <article><span>Account status</span><strong>Active</strong></article>
+            <article><span>Access level</span><strong id="accessLevel">Member</strong></article>
+          </div>
+          <button class="danger-link" id="deleteAccountButton" type="button">Delete this account</button>
+        </section>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
